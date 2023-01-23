@@ -1,0 +1,19 @@
+{
+  "name": "nufc-blog-cn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Onedayw/NUFC-blog-CN.git"
+  },
+  "author": "Nate Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Onedayw/NUFC-blog-CN/issues"
+  },
+  "homepage": "https://github.com/Onedayw/NUFC-blog-CN#readme"
+}
