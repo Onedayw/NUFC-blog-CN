@@ -1,13 +1,8 @@
-/* eslint-disable */
-
 import React, { useEffect, useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 import ReactMarkdown from "react-markdown";
-import { useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
-import { api } from "../../api/index";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { fetchPosts } from "../../api/index";
 import {
   NavButton,
   PostDetailCard,
@@ -17,40 +12,29 @@ import {
 import { formatDistanceToNow } from "date-fns";
 import { enUS } from "date-fns/locale";
 
-interface IPostDetail {
-  title: string;
-  comments: number;
-  createdAt: string;
-  githubUsername: string;
-  url: string;
-  body: string;
-}
-
 export function PostDetail() {
   const [post, setPost] = useState({});
-  const { id } = useParams();
 
-  async function fetchPost() {
-    const response = await api.get(
-      `/repos/pedr0d1as/Github-blog-issues/issues/${id}`
-    );
-    const { title, comments, created_at, user, html_url, body } = response.data;
+  async function fetch() {
+    const response = await fetchPosts();
+    const { title, comments, createdAt, creator, html_url, message } = response.data[0];
+    console.log(response.data);
     const newPostObj = {
       title,
-      githubUsername: user.login,
       comments,
-      createdAt: formatDistanceToNow(new Date(created_at), {
+      createdAt: formatDistanceToNow(new Date(createdAt), {
         locale: enUS,
         addSuffix: true,
       }),
+      creator: creator,
       url: html_url,
-      body,
+      message: message,
     };
     setPost(newPostObj);
   }
 
   useEffect(() => {
-    fetchPost();
+    fetch();
   }, []);
 
   return (
@@ -61,7 +45,7 @@ export function PostDetail() {
             <i className="fa-solid fa-chevron-left"></i>
             Back
           </NavButton>
-          <a href={post.url} target="_blank">
+          <a href={post.url} target="_blank" rel="noreferrer">
             See on Github
             <i className="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
@@ -72,7 +56,7 @@ export function PostDetail() {
         <footer>
           <span>
             <i className="fa-brands fa-github"></i>
-            {post.githubUsername}
+            {post.creator}
           </span>
           <span>
             <i className="fa-solid fa-calendar"></i>
@@ -86,7 +70,7 @@ export function PostDetail() {
       </PostDetailCard>
       <PostDetailContent>
         <div>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.message}</ReactMarkdown>
         </div>
       </PostDetailContent>
     </PostDetailContainer>

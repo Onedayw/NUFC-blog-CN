@@ -5,14 +5,14 @@ import { BrowserRouter } from "react-router-dom";
 import { Router } from "./api/Router";
 
 function App() {
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <Router></Router>
-      </BrowserRouter>
-      <GlobalStyle></GlobalStyle>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={defaultTheme}>
+            <BrowserRouter>
+                <Router></Router>
+            </BrowserRouter>
+            <GlobalStyle></GlobalStyle>
+        </ThemeProvider>
+    );
 }
 
 export default App;

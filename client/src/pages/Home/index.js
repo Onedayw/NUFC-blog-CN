@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../../api/index";
+import { fetchPosts } from "../../api/index";
+import { Form } from "../../components/Form";
 import { PersonInfo } from "./PersonInfo";
 import { PostCard } from "./PostCard";
 import {
@@ -13,25 +14,22 @@ export interface IPost {
   title: string;
   body: string;
   created_at: string;
-  number: string;
+  _id: string;
 }
 
 export function Home() {
   const [posts, setPosts] = useState([]);
   const [postsCounter, setPostsCounter] = useState(0);
 
-  async function fetchPosts(query = "") {
-    const response = await api.get(
-      `search/issues?q=${
-        query ? query : ""
-      }%20repo:${"pedr0d1as"}/Github-blog-issues`
-    );
-    setPosts(response.data.items);
+  async function fetch() {
+    const response = await fetchPosts();
+    console.log(response.data);
+    setPosts(response.data);
     setPostsCounter(response.data.total_count);
   }
 
   useEffect(() => {
-    fetchPosts();
+    fetch();
   }, []);
 
   return (
@@ -45,7 +43,7 @@ export function Home() {
           </div>
           <input
             type="text"
-            onBlur={(e) => fetchPosts(e.target.value)}
+            onBlur={() => fetch()}
             placeholder="Search a Post"
           />
         </SearchSection>
@@ -58,6 +56,7 @@ export function Home() {
               ></PostCard>
             ))}
         </ListSection>
+        <Form />
       </HomeContent>
     </HomeContainer>
   );

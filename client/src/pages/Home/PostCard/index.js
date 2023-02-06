@@ -10,19 +10,19 @@ interface IPostCard {
 }
 
 export function PostCard({ post }: IPostCard) {
-  const { created_at, body, title, number } = post;
-  const formattedDate = formatDistanceToNow(new Date(created_at), {
+  const { createdAt, creator, language, message, source, tags, title, _id } = post;
+  const formattedDate = formatDistanceToNow(new Date(createdAt), {
     locale: enUS,
     addSuffix: true,
   });
   return (
-    <PostCardContainer to={`/${number}`}>
+    <PostCardContainer to={`/${_id}`}>
       <header>
         <h1>{title}</h1>
         <span>{formattedDate}</span>
       </header>
       <main>
-        <p>{formatText(body, 80)}</p>
+        <p>{formatText(message, 80)}</p>
       </main>
     </PostCardContainer>
   );
