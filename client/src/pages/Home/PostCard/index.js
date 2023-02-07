@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { formatDistanceToNow } from "date-fns";
 import { enUS } from "date-fns/locale";
 import React from "react";
