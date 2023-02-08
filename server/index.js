@@ -13,7 +13,7 @@ app.use(cors());
 app.use('/posts', postRouter);
 
 const CONNECTION_URL = 'mongodb+srv://onedayw:onedayet@nufcblog-db.hlvt83k.mongodb.net/?retryWrites=true&w=majority';
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 443;
 
 mongoose.set('strictQuery', false);
 
